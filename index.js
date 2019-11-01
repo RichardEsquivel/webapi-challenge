@@ -30,4 +30,4 @@ server.use('/api/projects', ProjectRoutes);
 
 //set port to be listened on
 const port = process.env.PORT || 4000;
-server.listen(port, () => console.log(`This is your port of entry: ${port}`))
+server.listen(port, () => console.log(`This is your port of entry, 'JOLLY ROGER!': ${port}`))
