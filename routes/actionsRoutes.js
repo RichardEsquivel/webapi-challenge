@@ -12,15 +12,15 @@ router.get('/:project_id', (req, res) => {
 			if (actions.length > 0) {
 				res.status(200).json({ Results: actions })
 			} else {
-				res.status(400).json({ Error: "The project with this ID does not exist!", NoId: req.params.project_id })
+				res.status(400).json({ Error: "The actions with this ID does not exist!", NoId: req.params.project_id })
 			}
 		}).catch(error => res.status(500).json({ Error: "There was a problem that occured in the server.", error: error }))
 })
 
 
-//get all actions for all of the projects using project_id
+//get all actions for all of the projects 
 router.get('/', (req, res) => {
-	Actions.get(req.project_id)
+	Actions.get()
 		.then(actions => {
 			res.status(200).json({ Results: actions })
 		}).catch(error => res.status(500).json({ Error: "There was a problem that occured in the server.", error: error }))
@@ -41,8 +41,10 @@ router.delete("/", (req, res) => {
 				project.actions.forEach(actObj => {
 					if (actObj.id === req.body.id) {
 						Actions.remove(actObj.id)
+							.then(actObj => {
+								res.status(200).json({ Success: actObj, Message: "Action deleted!" })
+							})
 							.catch(err => res.status(500).json({ Error: "There was a problem with the server!" }))
-						res.status(200).json({ Success: actObj, Message: "Action deleted!" })
 					}
 				});
 				// If there is no action with that ID return a 400 error 
@@ -57,7 +59,7 @@ router.delete("/", (req, res) => {
 
 // Create, .post Create a new action for a project
 router.post("/", (req, res) => {
-	// Preliminary check to determine that there is both a project_id and also a description being passed in to create a new project
+	// Preliminary check to determine that there is both a project_id and also a description being passed in to create a new action for a project
 	if (!req.body.project_id || !req.body.description) {
 		res.status(400).json({ message: "Please include both a project ID and a description being sent in to create a new action." })
 	}

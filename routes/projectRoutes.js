@@ -38,7 +38,9 @@ router.delete('/', (req, res) => {
 		.then((project) => {
 			if (project) {
 				Project.remove(projectID)
-				return res.status(200).json({ Success: "That project was successfully deleted!", Removed: project })
+					.then(() => {
+						return res.status(200).json({ Success: "That project was successfully deleted!", Removed: project })
+					})
 			} else {
 				res.status(404).json({ message: "The project with that ID does not exist!" })
 			}
@@ -46,5 +48,6 @@ router.delete('/', (req, res) => {
 		.catch(err => res.status(500).json({ Error: "The database was unable to delete the project." }))
 });
 
-
+//Notes
+//with the delete check if project does exist and then removing it and with the put we also want the same sort of logic to check that it does exist as you want to make sure it exists before you update it.
 module.exports = router;
