@@ -41,7 +41,7 @@ router.delete("/", (req, res) => {
 				project.actions.forEach(actObj => {
 					if (actObj.id === req.body.id) {
 						Actions.remove(actObj.id)
-							.catch(err => res.status(500).json({ Error: "There was a problem with the server" }))
+							.catch(err => res.status(500).json({ Error: "There was a problem with the server!" }))
 						res.status(200).json({ Success: actObj, Message: "Action deleted!" })
 					}
 				});
@@ -53,6 +53,26 @@ router.delete("/", (req, res) => {
 
 		})
 		.catch(error => res.status(500).json({ Error: "There was a problem that occured in the server.", error: error }))
+})
+
+// Create, .post Create a new action for a project
+router.post("/", (req, res) => {
+	// Preliminary check to determine that there is both a project_id and also a description being passed in to create a new project
+	if (!req.body.project_id || !req.body.description) {
+		res.status(400).json({ message: "Please include both a project ID and a description being sent in to create a new action." })
+	}
+	// Perform a check that the project ID exists
+	Projects.get(req.body.project_id)
+		.then(project => {
+			if (project) {
+				Actions.insert(req.body)
+					.then(newAction => res.status(201).json({ Message: newAction }))
+					.catch(err => res.status(500).json({ Message: "There was an error in the server while creating a new action." }))
+			} else {
+				res.status(404).json({ message: "Unable to locate a project with that exact id.", SuppliedID: req.body.project_id })
+			}
+		}).catch(err => res.status(500).json({ Error: "There was a problem with the server!" }))
+
 })
 
 
