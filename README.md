@@ -25,15 +25,16 @@ In this challenge, create a web API around the following resources: `Projects` a
 Demonstrate your understanding of this Sprint's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your project manager.
 
 - [ ] Mention two parts of Express that you learned about this week.
-
+1. Express has a lot of features that allow us to write web applications and build api servers in an easier fashion. Building out a simple web server using just Node.js requires a bit of boiler plate and Express has syntax that performs many of those functions under the hood.
+2. Routing is another feature which allows us to select which request handler function is executed based on the URL visited and the HTTP method used. Functionality of of an application can be broken up for readability and ease of refactoring as changes are needed by utilizing routes.
 - [ ] Describe Middleware?
-
+Middleware implementation is a core feature of Express that allows that can act as an intermediary function upon req and responses and allow us to perform actions upon them and then either return the newly formed response or call in the next sequence of middleware to be executed. 
 - [ ] Describe a Resource?
-
+A resource is a built out interface determined by endpoints or URI in our case URL endpoints such as api/rooms which could be utilized to manage, update, get the current status of information contained with databases accessible at that endpoint and manipulate data utilizing a codified set of commands.
 - [ ] What can the API return to help clients know if a request was successful?
-
+Can return to a client a 201 such as if a new entry in the database was returned but more specifically and clearly a message returned to the client such as "Success: You've created a new entry for the room!" to allow the client in plainspeak to understand the action they were trying to perform was successful.
 - [ ] How can we partition our application into sub-applications?
-
+Express Routers allow us to split applications into sub-applications this allows us to more easily maintain and implement changes and to increase the ease with which someone can understand the logic with a particular part of the sub-application. Such as if we needed multiple routes related to a particular resource and also several resources to manage with an API we could split out the routes into categories for each resource and import them as needed utilizing the require('thisIsResource) syntax.
 ## Project Setup
 
 Follow these steps to set up and work on your project:
@@ -109,3 +110,4 @@ Now that we have a way to add, update, remove and retrieve data from the provide
 - From the React application show a list of all _projects_ using the API you built.
 - Add functionality to show the details of a project, including its actions, when clicking a project name in the list. Use React Router to navigate to a separate route to show the project details.
 - Add styling! Perhaps with [`styled-components`](https://www.styled-components.com/).
+.
